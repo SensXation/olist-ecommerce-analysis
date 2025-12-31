@@ -1,0 +1,12 @@
+# Ignore the secret configuration file
+.streamlit/secrets.toml
+
+# Ignore the virtual environment (it's huge and useless to others)
+venv/
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+
+# Ignore the Data folder (GitHub has a 100MB limit, and these CSVs are likely too big)
+data/
