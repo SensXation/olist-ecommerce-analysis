@@ -5,7 +5,7 @@ This project is an end-to-end data analysis solution for the **Olist E-Commerce 
 
 ## 🔗 Project Links
 * 📊 **[Interact with Live Dashboard](https://lookerstudio.google.com/reporting/ea938543-1b4f-4eb3-9b82-caf03a2c7614)**
-* 📄 **[View Full PDF Report](https://github.com/SensXation/olist-ecommerce-dashboard/raw/main/dashboard_report.pdf)**
+* 📄 **[View Full PDF Report](https://github.com/SensXation/olist-ecommerce-analysis/raw/main/dashboard_report.pdf)**
 * 🗄️ **[Data Source (Kaggle)](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce)**
 
 ## 🛠 Tech Stack
