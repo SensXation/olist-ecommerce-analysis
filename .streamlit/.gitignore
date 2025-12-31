@@ -1,0 +1,11 @@
+# Ignore the virtual environment folder
+venv/
+
+# Ignore secrets and passwords
+.streamlit/secrets.toml
+.env
+
+# Ignore large data files (GitHub has a limit)
+data/*.csv
+__pycache__/
+*.DS_Store
