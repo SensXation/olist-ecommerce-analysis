@@ -4,10 +4,10 @@ import toml
 from sqlalchemy import create_engine, text
 import plotly.express as px
 
-# --- 1. SETUP & CONFIGURATION ---
+# 1. SETUP & CONFIGURATION
 st.set_page_config(page_title="Olist Executive Dashboard", layout="wide")
 
-# Load Secrets (Securely)
+# Load Secrets 
 try:
     secrets = toml.load(".streamlit/secrets.toml")
     DB_URL = secrets["database"]["url"]
@@ -15,16 +15,16 @@ except Exception as e:
     st.error(f"❌ Error loading secrets: {e}")
     st.stop()
 
-# Cache the database connection (so we don't reconnect every time we click a button)
+# Cache the database connection
 @st.cache_resource
 def get_engine():
     return create_engine(DB_URL)
 
 engine = get_engine()
 
-# --- 2. SIDEBAR FILTERS ---
+# 2. SIDEBAR FILTERS 
 st.sidebar.header("Filter Data")
-# We'll fetch the available states from the DB to populate the filter
+# Will fetch the available states from the DB to populate the filter
 with engine.connect() as conn:
     states = pd.read_sql("SELECT DISTINCT customer_state FROM analytics_orders ORDER BY customer_state", conn)
     
@@ -38,12 +38,12 @@ if not selected_states:
     st.warning("Please select at least one state.")
     st.stop()
 
-# --- 3. MAIN DASHBOARD ---
+# 3. MAIN DASHBOARD
 st.title("🇧🇷 Olist E-Commerce Executive Dashboard")
 st.markdown("Live view of order performance from the **Enterprise Data Warehouse**.")
 
 # A. KEY PERFORMANCE INDICATORS (KPIs)
-# We write SQL to calculate these aggregations instantly
+# Write the SQL to calculate these aggregations instantly
 kpi_query = text(f"""
     SELECT 
         COUNT(order_id) as total_orders,
@@ -54,7 +54,7 @@ kpi_query = text(f"""
 """)
 
 with engine.connect() as conn:
-    # We pass the python list `selected_states` safely into the SQL query
+    # Pass the python list `selected_states` safely into the SQL query
     kpi_data = pd.read_sql(kpi_query, conn, params={"states": tuple(selected_states)})
 
 col1, col2, col3 = st.columns(3)
@@ -94,9 +94,6 @@ with col_chart:
 # C. TOP PAYMENT METHODS (Pie Chart)
 with col_map:
     st.subheader("Payment Methods")
-    # This requires a bit of string parsing since we aggregated them, 
-    # but for a dashboard, we can query the raw payments table if we wanted.
-    # For now, let's just query the simplified view.
     payment_query = text(f"""
         SELECT payment_types, count(*) as count
         FROM analytics_orders

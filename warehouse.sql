@@ -1,7 +1,7 @@
--- 1. Drop the table if it already exists (so we can re-run this script safely)
+-- 1. Drop the table if it already exists 
 DROP TABLE IF EXISTS analytics_orders;
 
--- 2. Create the Master Table using a Complex Join
+-- 2. Create the Master Table using Join
 CREATE TABLE analytics_orders AS
 SELECT 
     o.order_id,
@@ -14,8 +14,7 @@ SELECT
     c.customer_state,
     
     -- Payment Info (Joined from payments table)
-    -- Note: We use aggregation here because one order can have multiple payments
-    -- (e.g. part credit card, part voucher). We want the TOTAL amount per order.
+    -- Use aggregation here because one order can have multiple payments, only need the total order.
     SUM(p.payment_value) as total_order_value,
     STRING_AGG(DISTINCT p.payment_type, ', ') as payment_types
     
@@ -30,7 +29,7 @@ LEFT JOIN order_payments p
     ON o.order_id = p.order_id
 
 WHERE 
-    o.order_status = 'delivered' -- We only care about completed orders
+    o.order_status = 'delivered' -- Only need completed orders
 
 GROUP BY 
     o.order_id, 

@@ -21,7 +21,7 @@ with open("warehouse.sql", "r") as file:
 print("⏳ Running ELT Transformation (Creating 'analytics_orders')...")
 try:
     with engine.connect() as conn:
-        # We use text() to safely execute the raw SQL
+        # Use text() to safely execute the raw SQL
         conn.execute(text(sql_script))
         conn.commit() # Important! Saves the changes.
     print("✅ Success! The 'analytics_orders' table has been created in Supabase.")

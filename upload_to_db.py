@@ -1,11 +1,11 @@
 import pandas as pd
 from sqlalchemy import create_engine
 import os
-import toml # <--- New import
+import toml 
 
-# --- 1. SECURE CONFIGURATION ---
+# 1.SECURE CONFIGURATION
 try:
-    # Load secrets from the .streamlit folder
+    # Load secrets 
     secrets = toml.load(".streamlit/secrets.toml")
     DB_URL = secrets["database"]["url"]
 except FileNotFoundError:
@@ -18,10 +18,10 @@ except KeyError:
 # Create the connection engine
 engine = create_engine(DB_URL)
 
-# --- 2. AUTOMATIC UPLOADER ---
+#2. AUTOMATIC UPLOADER 
 data_folder = "data"
 
-# List of files we want to upload (and the table name we want to give them)
+# List of files we want to upload and the table name.
 files_to_tables = {
     "olist_customers_dataset.csv": "customers",
     "olist_geolocation_dataset.csv": "geolocation",
@@ -31,7 +31,7 @@ files_to_tables = {
     "olist_orders_dataset.csv": "orders",
     "olist_products_dataset.csv": "products",
     "olist_sellers_dataset.csv": "sellers",
-    "product_category_name_translation.csv": "product_translations" # Fixed filename if needed
+    "product_category_name_translation.csv": "product_translations" 
 }
 
 print("🚀 Starting Data Ingestion to Supabase...")
